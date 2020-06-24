@@ -3,7 +3,7 @@ layout: author
 photo: /assets/img/uploads/profile/kantai235.jpg
 name: kantai235
 display_name: 乾太₍₍ ◝(･◡･)◟ ⁾⁾
-position: Administrator
+position: 管理者
 bio: 是在哈囉？
 github_username: kantai235
 facebook_username: kantai235
