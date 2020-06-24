@@ -1,0 +1,41 @@
+translations:
+    text:
+      new_post: "最新文章"
+      see_also: "也可以看看"
+      search: "搜尋"
+      author: "作者"
+      share: "分享"
+      comments: "回應"
+    button:
+      read_now: "來去看看"
+      share_on_twitter: "分享到 Twitter"
+      share_on_facebook: "分享到 Facebook"
+    pagination:
+      page: "Page"
+      of: "of"
+      next_page: "下一頁"
+      next_post: "上一頁"
+    recommendation:
+      text: "來看看下一篇文章？"
+      back_btn: "回到頂部"
+    error_404:
+      title: "找不到頁面 :("
+      message: "不好意思，我們找不到您要的頁面，但這並不意味著是我們的問題，而是你該思考你的網址有沒有打錯？"
+      image_alt: "404 - 找不到頁面"
+    contact:
+      title: "聯絡我們"
+      subject: "New contact!"
+      submit_btn: "送出"
+      placeholders:
+        name: "Your name"
+        email: "Your e-mail"
+        message: "Your message"
+      errors:
+        locale: "zh-TW"
+        empty_name: "Name is required"
+        empty_email: "Email is required"
+        invalid_email: "Email is invalid"
+        empty_message: "Message is required"
+      after_send:
+        title: "Message sent!"
+        message: "Thank you for sending me a message. I'm going to answer ASAP."  

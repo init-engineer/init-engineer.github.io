@@ -1,0 +1,42 @@
+{
+  "name": "init-engineer.github.io",
+  "version": "3.1.0",
+  "description": "純靠北工程師的共同協作部落格。",
+  "main": "gulpfile.js",
+  "homepage": "https://github.com/init-engineer/init-engineer.github.io#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/init-engineer/init-engineer.github.io"
+  },
+  "keywords": [
+    "init.engineer",
+    "kaobei.engineer",
+    "kaobei",
+    "engineer",
+    "純靠北工程師",
+    "工程師"
+  ],
+  "author": "Kantai235",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/init-engineer/init-engineer.github.io/issues"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "child_process": "^1.0.2",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^6.2.0",
+    "gulp-include": "^2.4.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.0",
+    "gulp-yaml": "^2.0.4",
+    "json-sass": "^1.3.5",
+    "lodash": "^4.17.13",
+    "lodash.merge": "^4.6.2",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}

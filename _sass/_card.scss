@@ -1,0 +1,89 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 300px;
+	flex-shrink: 0;
+	flex-grow: 0;
+	max-width: 100%;
+	background-color: #FFF;
+	box-shadow: 0 5px 10px 0 rgba(#000, .15);
+	border-radius: 10px;
+	overflow: hidden;
+	margin: 1rem;
+}
+
+.card-img {
+	position: relative;
+	img {
+		position: absolute;
+		width: 100%;
+	}
+}
+
+.card-body {
+	position: relative;
+    // padding: 1.5rem;
+}
+
+.card-title {
+	font-size: 1.25rem;
+	line-height: 1.33;
+	font-weight: 700;
+	&.skeleton { // NOTICE THIS
+		min-height: 28px;
+		border-radius: 4px;
+	}
+}
+
+.card-intro {
+	margin-top: .75rem;
+	line-height: 1.5;
+	&.skeleton { // NOTICE THIS
+		min-height: 72px;
+		border-radius: 4px;
+	}
+}
+
+.ttp {
+    font-family: '微軟正黑體', 'arial black', sans-serif;
+    color: white;
+	text-align: left;
+	padding: 8px;
+    background-color: rgba($color: #FFF, $alpha: .6);
+    font-size: 30px;
+    text-shadow:
+        -2px -2px 0 #111,
+        2px -2px 0 #111,
+        -2px 2px 0 #111,
+        2px 2px 0 #111,
+		4px 4px 4px #111;
+		
+	a {
+		text-align: center;
+		color: white;
+	}
+}
+
+// THE LOADING EFFECT
+.skeleton {
+	background-color: #e2e5e7;
+	// The shine that's going to move across the skeleton:
+	background-image:
+			linear-gradient(
+				90deg,
+				rgba(#fff, 0),
+				rgba(#fff, 0.5),
+				rgba(#fff, 0)
+			);
+	background-size: 40px 100%; // width of the shine
+	background-repeat: no-repeat; // No need to repeat the shine effect
+	background-position: left -40px top 0; // Place shine on the left side, with offset on the left based on the width of the shine - see background-size
+	animation: shine 1s ease infinite; // increase animation time to see effect in 'slow-mo'
+}
+
+@keyframes shine {
+	to {
+		// Move shine from left to right, with offset on the right based on the width of the shine - see background-size
+		background-position: right -40px top 0;
+	}
+}

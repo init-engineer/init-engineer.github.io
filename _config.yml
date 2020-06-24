@@ -1,0 +1,151 @@
+# Site Settings
+name: 純靠北工程師
+title: 純靠北工程師 | 共同協作部落格
+description: 純靠北工程師的共同協作部落格。
+tags:
+  - blog
+  - template
+  - jekyll
+  - theme
+  - netlify
+email: kantai.developer@gmail.com
+disqus_username: kantaideveloper
+show_hero: true
+menu:
+  - title: 首頁
+    url: /
+  - title: 產生器
+    url: /category/generator
+  - title: 小工具
+    url: /category/tools
+  - title: 作者
+    url: /about
+  - title: 聯絡
+    url: /contact
+  - title: 訂閱
+    url: /feed.xml
+
+
+# Social Media Settings
+# Remove the item if you don't need it
+github_username: init-engineer
+facebook_username: init.kobeengineer
+twitter_username: kaobei_engineer
+instagram_username: kaobei.engineer
+# linkedin_username: linkedin_username
+# medium_username: medium_username
+plurk_username: kaobei_engineer
+
+
+# Posts Settings
+show_time_bar: true
+show_modal_on_exit: false
+show_modal_on_finish_post: true
+two_columns_layout: true
+
+
+# Advanced Settings
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site
+google_analytics: "UA-89952948-5"
+language: "zh-TW"
+categories_folder: category
+sent_message_url: "/contact/message-sent/"
+
+
+# Translations Settings
+translations:
+    text:
+      new_post: "最新文章"
+      see_also: "也可以看看"
+      search: "搜尋"
+      author: "作者"
+      share: "分享"
+      comments: "回應"
+    button:
+      read_now: "來去看看"
+      share_on_twitter: "分享到 Twitter"
+      share_on_facebook: "分享到 Facebook"
+    pagination:
+      page: "Page"
+      of: "of"
+      next_page: "下一頁"
+      next_post: "上一頁"
+    recommendation:
+      text: "來看看下一篇文章？"
+      back_btn: "回到頂部"
+    error_404:
+      title: "找不到頁面 :("
+      message: "不好意思，我們找不到您要的頁面，但這並不意味著是我們的問題，而是你該思考你的網址有沒有打錯？"
+      image_alt: "404 - 找不到頁面"
+    contact:
+      title: "聯絡我們"
+      subject: "New contact!"
+      submit_btn: "送出"
+      placeholders:
+        name: "Your name"
+        email: "Your e-mail"
+        message: "Your message"
+      errors:
+        locale: "zh-TW"
+        empty_name: "Name is required"
+        empty_email: "Email is required"
+        invalid_email: "Email is invalid"
+        empty_message: "Message is required"
+      after_send:
+        title: "Message sent!"
+        message: "Thank you for sending me a message. I'm going to answer ASAP."  
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:title/
+collections:
+  authors:
+    output: true
+paginate_path: "/page/:num/"
+show_get_theme_btn: false
+use_logo: false
+
+# Content paginator
+paginate_content:
+  enabled: true
+  debug: false
+  collections:
+    - posts
+  auto: false
+  separator: "--page-break--"
+  permalink: "/:num/"
+  seo_canonical: true
+  properties:
+    part:
+      is_generated: true
+    last:
+      is_generated: true
+    single:
+      is_generated: true
+
+# SASS
+sass:
+  style: compressed
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-paginate-content
+
+# Exclude my node related stuff
+exclude: [
+  'package.json',
+  'package-lock.json',
+  'src',
+  'node_modules',
+  'initpost.sh',
+  'Gemfile',
+  'Gemfile.lock',
+  'gulpfile.js',
+  'README.md'
+]
+
+# Theme
+version: v3.1.0

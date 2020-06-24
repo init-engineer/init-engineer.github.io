@@ -1,0 +1,134 @@
+.author {
+  background: $lightGray;
+  display: table;
+  width: 100%;
+  padding: rem(40px) 0;
+  margin: rem(40px) 0;
+
+  @include media(">=sm") {
+    padding: rem(50px) 0;
+  }
+
+  .details {
+    margin: auto;
+    max-width: rem(800px);
+    padding: 0 rem(20px);
+
+    @include media("<sm") {
+      text-align: center;
+    }
+  }
+
+  svg {
+    @include size(25, 25);
+    margin-right: rem(10px);
+  }
+
+  a {
+    fill: darken($lightGray, 30%);
+    text-decoration: none;
+    border: none;
+    transition: all 0.3s;
+
+    &:hover {
+      fill: $themeColor;
+    }
+  }
+
+  img {
+    width: rem(150px);
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+
+    @include media(">=sm") {
+      width: rem(180px);
+      float: left;
+      margin-right: 3.125rem;
+    }
+  }
+
+  .def {
+    color: gray;
+    font-size: rem(18px);
+    @include mainFont(300);
+    margin: rem(10px);
+
+    @include media(">=sm") {
+      margin: 0;
+    }
+  }
+
+  .name {
+    margin: 0;
+
+    a {
+      @include mainFont();
+      text-decoration: none;
+      color: black;
+      font-size: rem(30px);
+
+      @include media(">=sm") {
+        font-size: rem(45px);
+      }
+
+      &:hover {
+        color: $texts;
+      }
+    }
+  }
+
+  .desc {
+    @include mainFont(300);
+    margin: rem(10px);
+    font-size: rem(16px);
+    line-height: rem(25px);
+
+    @include media(">=sm") {
+      font-size: rem(18px);
+    }
+  }
+}
+
+.list-wrapper {
+  // max-width: 400px;
+  margin: 50px auto;
+}
+
+.list {
+  background: #fff;
+  border-radius: 2px;
+  list-style: none;
+  padding: 10px 20px;
+}
+
+.list-item {
+  display: flex;
+  margin: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  &:last-child{
+    border-bottom: none;
+  }
+  &-image {
+    border-radius: 50%;
+    width: 64px;
+  }
+  &-content{
+    margin-left: 20px;
+    h4, p{
+      padding-top: 0rem;
+      margin: 0;
+    }
+    h4{
+      margin-top: 10px;
+      font-size: 18px;
+    }
+    p{
+      font-size: 1.25rem;
+      line-height: 1.2rem;
+      color: #aaa;
+    }
+  }
+}

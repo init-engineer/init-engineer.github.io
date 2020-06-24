@@ -1,0 +1,25 @@
+name: 純靠北工程師
+title: 純靠北工程師 | 共同協作部落格
+description: 純靠北工程師的共同協作部落格。
+tags:
+  - blog
+  - template
+  - jekyll
+  - theme
+  - netlify
+email: kantai.developer@gmail.com
+disqus_username: kantaideveloper
+show_hero: true
+menu:
+  - title: 首頁
+    url: /
+  - title: 產生器
+    url: /category/generator
+  - title: 小工具
+    url: /category/tools
+  - title: 作者
+    url: /about
+  - title: 聯絡
+    url: /contact
+  - title: 訂閱
+    url: /feed.xml
