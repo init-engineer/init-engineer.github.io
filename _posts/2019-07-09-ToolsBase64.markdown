@@ -1,0 +1,312 @@
+---
+date            : 2019-07-09 12:00:00
+layout          : post
+title           : 線上編碼、解碼器 for Base64
+subtitle        : 一款簡單的線上編碼、解碼器，Base64 是一種基於 64 個可列印字元來表示二進位資料的表示方法。
+description     : "一款簡單的線上編碼、解碼器，Base64 是一種基於 64 個可列印字元來表示二進位資料的表示方法。"
+image           : https://i.imgur.com/C2XQYXL.png
+optimized_image : https://i.imgur.com/C2XQYXL.png
+category        : tools
+tags            :
+- Tools
+- Base64
+author          : kantai235
+origin_url      : https://kantai235.github.io/ToolsURL
+---
+
+<style type="text/css" media="screen">
+    .container {
+        margin: 0px auto;
+        max-width: 800px;
+    }
+
+    textarea {
+        margin-bottom: 0px !important;
+        border-radius: 12px;
+    }
+
+    .contact-form button[type="button"] {
+        display: inline;
+        padding: 19px 39px 18px 39px;
+        color: #fff;
+        font-size: 1.125rem;
+        width: 49%;
+        border: 1px solid #ba0009;
+            border-top-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+            border-left-width: 1px;
+        /* margin: 0px auto; */
+        margin-top: .625rem;
+        margin-bottom: .625rem;
+        cursor: pointer;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        outline: none;
+    }
+
+    select {
+        padding: 9px 18px 9px 18px;
+        width: 100%;
+        /* border: 6px solid #032629 !important; */
+        /* border-width: 2px 4px 4px 2px !important; */
+        border-radius: 12px;
+        margin: .625rem;
+        padding: .625rem;
+    }
+
+    .contact-form .encode {
+        background: #086770;
+        border: 6px solid #032629 !important;
+        border-width: 2px 4px 4px 2px !important;
+    }
+
+    .contact-form .decode {
+        background: #427035;
+        border: 6px solid #243e1d !important;
+        border-width: 2px 4px 4px 2px !important;
+    }
+
+    .encode_textarea {
+        border: 6px solid #086770 !important;
+            border-top-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+            border-left-width: 1px;
+    }
+
+    .decode_textarea {
+        border: 6px solid #427035 !important;
+            border-top-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+            border-left-width: 1px;
+    }
+</style>
+
+<div class="container">
+    <h3 style="margin-top: 1.625rem;margin-bottom: .125rem;">選擇編碼格式</h3>
+    <select id="select" name="select">
+        <option value="UTF-8">UTF-8 (預設)</option>
+        <option value="UTF-16">UTF-16</option>
+        <option value="Unicode">Unicode</option>
+    </select>
+    <div id="form" class="contact-form">
+        <textarea type="text" class="encode_textarea" id="encode_value" name="encode_value" placeholder="在此輸入您想要「編碼」為 Base64 的文本內容 ..."></textarea>
+        <button type="button" class="encode" id="encode" onclick="encode()">編碼 Encode</button>
+        <button type="button" class="decode" id="decode" onclick="decode()">解碼 Decode</button>
+        <textarea type="text" class="decode_textarea" id="decode_value" name="decode_value" placeholder="在此輸入您想要「解碼」為文本的 Base64 內容 ..."></textarea>
+    </div>
+</div>
+
+<script>
+    function encode () {
+        var sMyInput = $('#encode_value').val();
+        switch ($('#select').val()) {
+            case 'UTF-8':
+                var aMyUTF8Input = strToUTF8Arr(sMyInput);
+                var sMyBase64 = base64EncArr(aMyUTF8Input);
+                break;
+
+            case 'UTF-16':
+                var sMyBase64 = btoaUTF16(sMyInput);
+                break;
+
+            case 'Unicode':
+                var sMyBase64 = b64EncodeUnicode(sMyInput);
+                break;
+        }
+        $('#decode_value').val(sMyBase64);
+    };
+
+    function decode () {
+        var sMyBase64 = $('#decode_value').val();
+        switch ($('#select').val()) {
+            case 'UTF-8':
+                var aMyUTF8Output = base64DecToArr(sMyBase64);
+                var sMyOutput = UTF8ArrToStr(aMyUTF8Output);
+                break;
+
+            case 'UTF-16':
+                var sMyOutput = atobUTF16(sMyBase64);
+                break;
+
+            case 'Unicode':
+                var sMyOutput = b64DecodeUnicode(sMyBase64);
+                break;
+        }
+        $('#encode_value').val(sMyOutput);
+    };
+
+    /* Array of bytes to base64 string decoding */
+    function b64ToUint6 (nChr) {
+        return nChr > 64 && nChr < 91 ?
+            nChr - 65
+          : nChr > 96 && nChr < 123 ?
+            nChr - 71
+          : nChr > 47 && nChr < 58 ?
+            nChr + 4
+          : nChr === 43 ?
+            62
+          : nChr === 47 ?
+            63
+          :
+            0;
+    }
+
+    function base64DecToArr (sBase64, nBlockSize) {
+        var sB64Enc = sBase64.replace(/[^A-Za-z0-9\+\/]/g, ""), nInLen = sB64Enc.length,
+            nOutLen = nBlockSize ? Math.ceil((nInLen * 3 + 1 >>> 2) / nBlockSize) * nBlockSize : nInLen * 3 + 1 >>> 2, aBytes = new Uint8Array(nOutLen);
+        for (var nMod3, nMod4, nUint24 = 0, nOutIdx = 0, nInIdx = 0; nInIdx < nInLen; nInIdx++) {
+            nMod4 = nInIdx & 3;
+            nUint24 |= b64ToUint6(sB64Enc.charCodeAt(nInIdx)) << 18 - 6 * nMod4;
+            if (nMod4 === 3 || nInLen - nInIdx === 1) {
+                for (nMod3 = 0; nMod3 < 3 && nOutIdx < nOutLen; nMod3++, nOutIdx++) {
+                    aBytes[nOutIdx] = nUint24 >>> (16 >>> nMod3 & 24) & 255;
+                }
+                nUint24 = 0;
+            }
+        }
+        return aBytes;
+    }
+
+    /* Base64 string to array encoding */
+    function uint6ToB64 (nUint6) {
+        return nUint6 < 26 ?
+            nUint6 + 65
+          : nUint6 < 52 ?
+            nUint6 + 71
+          : nUint6 < 62 ?
+            nUint6 - 4
+          : nUint6 === 62 ?
+            43
+          : nUint6 === 63 ?
+            47
+          :
+            65;
+    }
+
+    function base64EncArr (aBytes) {
+        var eqLen = (3 - (aBytes.length % 3)) % 3, sB64Enc = "";
+        for (var nMod3, nLen = aBytes.length, nUint24 = 0, nIdx = 0; nIdx < nLen; nIdx++) {
+            nMod3 = nIdx % 3;
+            /* Uncomment the following line in order to split the output in lines 76-character long: */
+            /* if (nIdx > 0 && (nIdx * 4 / 3) % 76 === 0) { sB64Enc += "\r\n"; } */
+            nUint24 |= aBytes[nIdx] << (16 >>> nMod3 & 24);
+            if (nMod3 === 2 || aBytes.length - nIdx === 1) {
+                sB64Enc += String.fromCharCode(uint6ToB64(nUint24 >>> 18 & 63), uint6ToB64(nUint24 >>> 12 & 63), uint6ToB64(nUint24 >>> 6 & 63), uint6ToB64(nUint24 & 63));
+                nUint24 = 0;
+            }
+        }
+        return  eqLen === 0 ? sB64Enc : sB64Enc.substring(0, sB64Enc.length - eqLen) + (eqLen === 1 ? "=" : "==");
+    }
+
+    /* UTF-8 array to DOMString and vice versa */
+    function UTF8ArrToStr (aBytes) {
+        var sView = "";
+        for (var nPart, nLen = aBytes.length, nIdx = 0; nIdx < nLen; nIdx++) {
+            nPart = aBytes[nIdx];
+            sView += String.fromCharCode(
+                nPart > 251 && nPart < 254 && nIdx + 5 < nLen ? /* six bytes */
+                /* (nPart - 252 << 30) may be not so safe in ECMAScript! So...: */
+                (nPart - 252) * 1073741824 + (aBytes[++nIdx] - 128 << 24) + (aBytes[++nIdx] - 128 << 18) + (aBytes[++nIdx] - 128 << 12) + (aBytes[++nIdx] - 128 << 6) + aBytes[++nIdx] - 128
+                : nPart > 247 && nPart < 252 && nIdx + 4 < nLen ? /* five bytes */
+                (nPart - 248 << 24) + (aBytes[++nIdx] - 128 << 18) + (aBytes[++nIdx] - 128 << 12) + (aBytes[++nIdx] - 128 << 6) + aBytes[++nIdx] - 128
+                : nPart > 239 && nPart < 248 && nIdx + 3 < nLen ? /* four bytes */
+                (nPart - 240 << 18) + (aBytes[++nIdx] - 128 << 12) + (aBytes[++nIdx] - 128 << 6) + aBytes[++nIdx] - 128
+                : nPart > 223 && nPart < 240 && nIdx + 2 < nLen ? /* three bytes */
+                (nPart - 224 << 12) + (aBytes[++nIdx] - 128 << 6) + aBytes[++nIdx] - 128
+                : nPart > 191 && nPart < 224 && nIdx + 1 < nLen ? /* two bytes */
+                (nPart - 192 << 6) + aBytes[++nIdx] - 128
+                : /* nPart < 127 ? */ /* one byte */
+                nPart
+            );
+        }
+        return sView;
+    }
+
+    function strToUTF8Arr (sDOMStr) {
+        var aBytes,
+            nChr,
+            nStrLen = sDOMStr.length,
+            nArrLen = 0;
+        /* mapping... */
+        for (var nMapIdx = 0; nMapIdx < nStrLen; nMapIdx++) {
+            nChr = sDOMStr.charCodeAt(nMapIdx);
+            nArrLen += nChr < 0x80 ? 1 : nChr < 0x800 ? 2 : nChr < 0x10000 ? 3 : nChr < 0x200000 ? 4 : nChr < 0x4000000 ? 5 : 6;
+        }
+        aBytes = new Uint8Array(nArrLen);
+        /* transcription... */
+        for (var nIdx = 0, nChrIdx = 0; nIdx < nArrLen; nChrIdx++) {
+            nChr = sDOMStr.charCodeAt(nChrIdx);
+            if (nChr < 128) {
+                /* one byte */
+                aBytes[nIdx++] = nChr;
+            } else if (nChr < 0x800) {
+                /* two bytes */
+                aBytes[nIdx++] = 192 + (nChr >>> 6);
+                aBytes[nIdx++] = 128 + (nChr & 63);
+            } else if (nChr < 0x10000) {
+                /* three bytes */
+                aBytes[nIdx++] = 224 + (nChr >>> 12);
+                aBytes[nIdx++] = 128 + (nChr >>> 6 & 63);
+                aBytes[nIdx++] = 128 + (nChr & 63);
+            } else if (nChr < 0x200000) {
+                /* four bytes */
+                aBytes[nIdx++] = 240 + (nChr >>> 18);
+                aBytes[nIdx++] = 128 + (nChr >>> 12 & 63);
+                aBytes[nIdx++] = 128 + (nChr >>> 6 & 63);
+                aBytes[nIdx++] = 128 + (nChr & 63);
+            } else if (nChr < 0x4000000) {
+                /* five bytes */
+                aBytes[nIdx++] = 248 + (nChr >>> 24);
+                aBytes[nIdx++] = 128 + (nChr >>> 18 & 63);
+                aBytes[nIdx++] = 128 + (nChr >>> 12 & 63);
+                aBytes[nIdx++] = 128 + (nChr >>> 6 & 63);
+                aBytes[nIdx++] = 128 + (nChr & 63);
+            } else /* if (nChr <= 0x7fffffff) */ {
+                /* six bytes */
+                aBytes[nIdx++] = 252 + (nChr >>> 30);
+                aBytes[nIdx++] = 128 + (nChr >>> 24 & 63);
+                aBytes[nIdx++] = 128 + (nChr >>> 18 & 63);
+                aBytes[nIdx++] = 128 + (nChr >>> 12 & 63);
+                aBytes[nIdx++] = 128 + (nChr >>> 6 & 63);
+                aBytes[nIdx++] = 128 + (nChr & 63);
+            }
+        }
+        return aBytes;
+    }
+
+    function btoaUTF16 (sString) {
+        var aUTF16CodeUnits = new Uint16Array(sString.length);
+        Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = sString.charCodeAt(idx); });
+        return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+    }
+
+    function atobUTF16 (sBase64) {
+        var sBinaryString = atob(sBase64), aBinaryView = new Uint8Array(sBinaryString.length);
+        Array.prototype.forEach.call(aBinaryView, function (el, idx, arr) { arr[idx] = sBinaryString.charCodeAt(idx); });
+        return String.fromCharCode.apply(null, new Uint16Array(aBinaryView.buffer));
+    }
+
+    function b64EncodeUnicode(str) {
+    // first we use encodeURIComponent to get percent-encoded UTF-8,
+    // then we convert the percent encodings into raw bytes which
+    // can be fed into btoa.
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+            function toSolidBytes(match, p1) {
+                return String.fromCharCode('0x' + p1);
+        }));
+    }
+
+    function b64DecodeUnicode(str) {
+        // Going backwards: from bytestream, to percent-encoding, to original string.
+        return decodeURIComponent(atob(str).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    }
+</script>
+
+> # Base64
+> Base64 是一種基於 64 個可列印字元來表示二進位資料的表示方法。由於 2^6 = 64，所以每 6 個位元為一個單元，對應某個可列印字元。3 個位元組有 24 個位元，對應於 4 個 Base64 單元，即 3 個位元組可由 4 個可列印字元來表示。它可用來作為電子郵件的傳輸編碼。在 Base64 中的可列印字元包括字母 A-Z、a-z、數字 0-9，這樣共有 62 個字元，此外兩個可列印符號在不同的系統中而不同。一些如 uuencode 的其他編碼方法，和之後 BinHex 的版本使用不同的 64 字元集來代表 6 個二進位數字，但是不被稱為 Base64。
+> - 資料來源：[Base64 - 維基百科，自由的百科全書](https://zh.wikipedia.org/wiki/Base64)
