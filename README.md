@@ -20,7 +20,9 @@
 
 ---
 ## 安裝
-1. `gulp` 跑起來！
+1. `bundle install` 跑起來！
+2. `npm install` 跑起來！
+3. `gulp` 跑起來！
 
 ---
 ## 貢獻
@@ -43,6 +45,7 @@ linkedin_username: YOUR_LINKEDIN_USERNAME
 medium_username: YOUR_MEDIUM_USERNAME
 plurk_username: YOUR_PLURK_USERNAME
 ---
+```
 2. 請將你的大頭貼上傳至 `/assets/img/uploads/profile/{帳號}.jpg`
 
 ### 部署文章
