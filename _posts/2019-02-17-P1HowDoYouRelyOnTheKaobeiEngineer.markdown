@@ -198,7 +198,7 @@ Presenter 主要目的是在於處理一些顯示邏輯，而不是把顯示邏�
 
 因為是以 Laravel 為主，所以多多少少會參考一下大家架構是怎麼定的，然後在參雜一些可能在別的地方所學到的觀念， ~~最後摻在一起做成撒 ...~~，下面兩個是這次寫文章時，又重新找出來的資料參考。
 
-- [Laravel 的中大型專案架構 點燈坊](https://oomusou.io/laravel/architecture/)
+- [Laravel 的中大型專案架構 點燈坊](https://old-oomusou.goodjack.tw/laravel/architecture/)
 - [LaravelConf2017 筆記 - HackMD](https://hackmd.io/s/S1dlnXB4Z)
 
 如果你也想嘗試自己寫個靠北 XXX 網站的話，專案的使用你可以參考這個專案，這項專案已經幫你完成很多事情了，例如權限與角色、信箱認證、以社群平台登入串接 ... 等等功能，純靠北工程師也是以這個專案下去修改而成的，這部分在資料庫模型篇會再次提到，一天自幹出自己的靠北網站不是夢！
